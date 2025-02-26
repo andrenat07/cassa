@@ -96,6 +96,7 @@
             prodottiToolStripMenuItem.Name = "prodottiToolStripMenuItem";
             prodottiToolStripMenuItem.Size = new Size(199, 22);
             prodottiToolStripMenuItem.Text = "prodotti";
+            prodottiToolStripMenuItem.Click += prodottiToolStripMenuItem_Click;
             // 
             // visualizzaToolStripMenuItem
             // 
@@ -145,14 +146,14 @@
             // barcodeFakeToolStripMenuItem
             // 
             barcodeFakeToolStripMenuItem.Name = "barcodeFakeToolStripMenuItem";
-            barcodeFakeToolStripMenuItem.Size = new Size(180, 22);
+            barcodeFakeToolStripMenuItem.Size = new Size(160, 22);
             barcodeFakeToolStripMenuItem.Text = "fake barcode";
             barcodeFakeToolStripMenuItem.Click += apriBarcodeSimulator;
             // 
             // disattivaStampaMenu
             // 
             disattivaStampaMenu.Name = "disattivaStampaMenu";
-            disattivaStampaMenu.Size = new Size(180, 22);
+            disattivaStampaMenu.Size = new Size(160, 22);
             disattivaStampaMenu.Text = "disattiva stampa";
             disattivaStampaMenu.Click += disattivaStampa;
             // 
@@ -194,6 +195,7 @@
             pulsanteFidelityCard.TabStop = false;
             pulsanteFidelityCard.Text = "fidelity card";
             pulsanteFidelityCard.UseVisualStyleBackColor = true;
+            pulsanteFidelityCard.Click += pulsanteFidelityCard_Click;
             // 
             // pulsanteSconto
             // 
@@ -204,16 +206,17 @@
             pulsanteSconto.TabStop = false;
             pulsanteSconto.Text = "sconto";
             pulsanteSconto.UseVisualStyleBackColor = true;
+            pulsanteSconto.Click += pulsanteSconto_Click;
             // 
             // totale
             // 
             totale.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            totale.Font = new Font("Segoe UI", 30F);
-            totale.Location = new Point(428, 263);
+            totale.Font = new Font("Segoe UI", 20F);
+            totale.Location = new Point(428, 220);
             totale.Name = "totale";
-            totale.Size = new Size(363, 100);
+            totale.Size = new Size(363, 150);
             totale.TabIndex = 6;
-            totale.Text = "totale:\r\n0€";
+            totale.Text = "totale: 0€\r\ndi cui IVA: 0€\r\nsconto: 0%";
             totale.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // stampa
@@ -234,9 +237,11 @@
             Controls.Add(scontrino);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
+            MinimumSize = new Size(800, 400);
             Name = "Main";
             Text = "Form1";
             Load += Form1_Load;
+            KeyDown += debugRandomProdotti;
             Resize += Main_Resize;
             scontrino.ResumeLayout(false);
             menuStrip1.ResumeLayout(false);

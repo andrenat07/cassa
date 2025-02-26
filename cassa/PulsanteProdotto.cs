@@ -8,9 +8,8 @@ namespace cassa
 {
     internal class PulsanteProdotto:Button
     {
-        private Prodotto prodotto;
+        private int indice;
 
-
-        public Prodotto Prodotto { get => prodotto; set => prodotto = value; }
+        public int Indice { get => indice; set => indice = value; }
     }
 }

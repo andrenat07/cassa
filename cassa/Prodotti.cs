@@ -36,7 +36,18 @@ namespace cassa
         public string Descrizione { get => descrizione; set => descrizione = value; }
         public double Prezzo { get => prezzo; set => prezzo = value; }
         internal Reparto Reparto { get => reparto; set => reparto = value; }
-        public string Codice { get => codice; set => codice = value; }
+        public string Codice 
+        { 
+            get => codice; 
+            set
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(value, @"^\d{5}$"))
+                {
+                    throw new ArgumentException("Il codice deve contenere esattamente 5 cifre.");
+                }
+                codice = value;
+            }
+        }
 
         public Prodotto(string nome, string descrizione, double prezzo, Reparto reparto, string codice)
         {
@@ -46,31 +57,90 @@ namespace cassa
             this.Reparto = reparto;
             this.Codice = codice;
         }
-
-        public Prodotto() { }
-
-
         public override string ToString()
         {
             return $"nome: {nome}, descrizione: {descrizione}, prezzo: {prezzo}€, reparto: {reparto}";
         }
     }
-    //internal class alimento : prodotto
-    //{
+     
+    //Sottoclasse Alimenti
+    internal class Alimento : Prodotto
+    {
+        private DateOnly scadenza;
+        private int valoreEnergetico;
+        public Alimento(string nome, string descrizione, double prezzo,  Reparto Reparto, string codice, DateOnly scadenza, int valoreEnergetico) : base(nome, descrizione, prezzo, Reparto, codice)
+        {
+            this.Reparto = Reparto.Alimentari;
+            this.Scadenza = scadenza;
+            this.valoreEnergetico = valoreEnergetico;
+        }
 
-    //}
-    //internal class ortofrutta : prodotto
-    //{
+        public DateOnly Scadenza { get => scadenza; set => scadenza = value; }
+        public int ValoreEnergetico { get => valoreEnergetico; set => valoreEnergetico = value; }
 
-    //}
-    //internal class macelleria : prodotto
-    //{
+        public override string ToString()
+        {
+            return $"nome: {Nome}, descrizione: {Descrizione}, prezzo: {Prezzo}€, reparto: {Reparto}, Data di scadenza: {Scadenza.ToString("dd MM yyyy")} valore energetico: {ValoreEnergetico} Kcal";
+        }
+    }
 
-    //}
-    //internal class pescheria : prodotto
+    // Sottoclasse OrtoFrutta 
+    //internal class OrtoFrutta : Prodotto
     //{
+    //    private string paeseProvenienza;
+    //    private int peso;
 
+    //    public OrtoFrutta(string nome, string descrizione, double prezzo, Reparto reparto, string codice, string paeseProvenienza) : base(nome, descrizione, prezzo, reparto, codice)
+    //    {
+    //    }
+
+    //    public override string ToString()
+    //    {
+    //        return $" Paese di provenienza : {paeseProvenienza} ";
+    //    }
     //}
+
+    // Sottoclasse Macelleria 
+    //internal class Carne : Prodotto
+    //{
+    //    private string animale;
+    //    private string paeseOrigine;
+    //    private int peso;
+    //    public Carne(string nome, string descrizione, double prezzo, int codice, Reparto Reparto, string TipoCarne, string PaeseOrigine, string PaeseMacello) : base(nome, descrizione, prezzo, codice, Reparto)
+    //    {
+    //        this.Reparto = Reparto.Macelleria;
+    //        this.TipoCarne = TipoCarne;
+    //        this.PaeseOrigine = PaeseOrigine;
+    //        this.PaeseMacello = PaeseMacello;
+    //    }
+    //    public override string ToString()
+    //    {
+    //        return $"Tipo di carne: {TipoCarne}; Paese di origine : {PaeseOrigine}; Paese Macello:{PaeseMacello}";
+    //    }
+    //}
+
+    //// Sottoclasse Panetteria 
+    //internal class Panetteria : Prodotto
+    //{
+    //    private string DataProduzione;
+    //    public Panetteria(string nome, string descrizione, double prezzo, int codice, Reparto Reparto, string DataProduzione) : base(nome, descrizione, prezzo, codice, Reparto)
+    //    {
+    //        this.Reparto = Reparto.Panetteria;
+    //        this.DataProduzione = DataProduzione;
+    //    }
+    //    public override string ToString()
+    //    {
+    //        return $"Data di produzione : {DataProduzione}";
+    //    }
+    //}
+    // Sottoclasse Pescheria 
+    //internal class Pescheria : Prodotto
+    //{
+    //    private string TipoPesce;
+    //    private string DataPescaggio;
+    //}
+
+
     //internal class panetteria : prodotto
     //{
 
