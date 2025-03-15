@@ -26,5 +26,10 @@ namespace cassa
         public string Cognome { get => cognome; set => cognome = value; }
         public string Codice { get => codice; set => codice = value; }
         public int Sconto { get => sconto; set => sconto = value; }
+
+        public override string ToString() 
+        {
+            return $"nome: {nome}, Cognome: {cognome}, sconto: {sconto}%";
+        }
     }
 }

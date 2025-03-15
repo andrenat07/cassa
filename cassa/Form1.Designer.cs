@@ -34,11 +34,7 @@
             menuStrip1 = new MenuStrip();
             impostazioniToolStripMenuItem = new ToolStripMenuItem();
             prodottiToolStripMenuItem = new ToolStripMenuItem();
-            visualizzaToolStripMenuItem = new ToolStripMenuItem();
-            aggiungiToolStripMenuItem = new ToolStripMenuItem();
             fidelityCardToolStripMenuItem = new ToolStripMenuItem();
-            visualizzaToolStripMenuItem1 = new ToolStripMenuItem();
-            creaToolStripMenuItem = new ToolStripMenuItem();
             stampaScontrinoToolStripMenuItem = new ToolStripMenuItem();
             modalitàProfToolStripMenuItem = new ToolStripMenuItem();
             barcodeFakeToolStripMenuItem = new ToolStripMenuItem();
@@ -92,42 +88,17 @@
             // 
             // prodottiToolStripMenuItem
             // 
-            prodottiToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { visualizzaToolStripMenuItem, aggiungiToolStripMenuItem });
             prodottiToolStripMenuItem.Name = "prodottiToolStripMenuItem";
             prodottiToolStripMenuItem.Size = new Size(199, 22);
             prodottiToolStripMenuItem.Text = "prodotti";
             prodottiToolStripMenuItem.Click += prodottiToolStripMenuItem_Click;
             // 
-            // visualizzaToolStripMenuItem
-            // 
-            visualizzaToolStripMenuItem.Name = "visualizzaToolStripMenuItem";
-            visualizzaToolStripMenuItem.Size = new Size(123, 22);
-            visualizzaToolStripMenuItem.Text = "visualizza";
-            // 
-            // aggiungiToolStripMenuItem
-            // 
-            aggiungiToolStripMenuItem.Name = "aggiungiToolStripMenuItem";
-            aggiungiToolStripMenuItem.Size = new Size(123, 22);
-            aggiungiToolStripMenuItem.Text = "aggiungi";
-            // 
             // fidelityCardToolStripMenuItem
             // 
-            fidelityCardToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { visualizzaToolStripMenuItem1, creaToolStripMenuItem });
             fidelityCardToolStripMenuItem.Name = "fidelityCardToolStripMenuItem";
             fidelityCardToolStripMenuItem.Size = new Size(199, 22);
             fidelityCardToolStripMenuItem.Text = "fidelity card";
-            // 
-            // visualizzaToolStripMenuItem1
-            // 
-            visualizzaToolStripMenuItem1.Name = "visualizzaToolStripMenuItem1";
-            visualizzaToolStripMenuItem1.Size = new Size(123, 22);
-            visualizzaToolStripMenuItem1.Text = "visualizza";
-            // 
-            // creaToolStripMenuItem
-            // 
-            creaToolStripMenuItem.Name = "creaToolStripMenuItem";
-            creaToolStripMenuItem.Size = new Size(123, 22);
-            creaToolStripMenuItem.Text = "nuova";
+            fidelityCardToolStripMenuItem.Click += fidelityCardToolStripMenuItem_Click;
             // 
             // stampaScontrinoToolStripMenuItem
             // 
@@ -257,11 +228,7 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem impostazioniToolStripMenuItem;
         private ToolStripMenuItem prodottiToolStripMenuItem;
-        private ToolStripMenuItem visualizzaToolStripMenuItem;
-        private ToolStripMenuItem aggiungiToolStripMenuItem;
         private ToolStripMenuItem fidelityCardToolStripMenuItem;
-        private ToolStripMenuItem visualizzaToolStripMenuItem1;
-        private ToolStripMenuItem creaToolStripMenuItem;
         private ToolStripMenuItem stampaScontrinoToolStripMenuItem;
         private ToolStripMenuItem modalitàProfToolStripMenuItem;
         private ToolStripMenuItem creditToolStripMenuItem;

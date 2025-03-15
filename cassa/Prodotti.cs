@@ -25,7 +25,8 @@ namespace cassa
         Giocattoli,
         Animali
     }
-    internal class Prodotto
+    
+    class Prodotto
     {
         protected string nome;
         protected string descrizione;
