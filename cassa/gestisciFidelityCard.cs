@@ -15,6 +15,7 @@ namespace cassa
         private Main lista;
         public gestisciFidelityCard(Main lista)
         {
+            //prendiamo il riferimento della prima form
             InitializeComponent();
             this.lista = lista;
 
@@ -23,6 +24,7 @@ namespace cassa
 
         private void MoficaProdotti_Load(object sender, EventArgs e)
         {
+            //aggiungiamo tutte le carte alla tabella
             foreach (var item in lista.Carte)
                 listBox1.Items.Add(item);
 
@@ -30,6 +32,7 @@ namespace cassa
 
         private void elimina_click(object sender, EventArgs e)
         {
+            //quando si preme il tatsto elimina cancella il prodotto selezionato
             if (listBox1.SelectedItems != null)
             {
                 lista.Carte.RemoveAt(listBox1.SelectedIndex);
@@ -40,11 +43,13 @@ namespace cassa
 
         private void nuova_Click(object sender, EventArgs e)
         {
+            //quando si preme nuova
+            //costruiamo l'oggetto della form NuovaCard gli passiamo il riferimento alla lista di carte
             NuovaCard si = new NuovaCard(lista.Carte); 
             si.ShowDialog();
-            listBox1.Items.Clear();
+            listBox1.Items.Clear();//ripristiniamo la tabella
             foreach (var item in lista.Carte)
-                listBox1.Items.Add(item);
+                listBox1.Items.Add(item);//reinseriamo le carte
         }
     }
 }

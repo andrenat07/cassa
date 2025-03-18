@@ -61,7 +61,7 @@ namespace cassa
         }
         public override string ToString()
         {
-            return $"nome: {nome}, descrizione: {descrizione}, prezzo: {prezzo}€, reparto: {reparto}";
+            return $"Nome: {nome}, descrizione: {descrizione}, prezzo: {prezzo}€, reparto: {reparto}";
         }
     }
 
@@ -82,7 +82,7 @@ namespace cassa
 
         public override string ToString()
         {
-            return $"nome: {Nome}, descrizione: {Descrizione}, prezzo: {Prezzo}€, reparto: {Reparto}, Data di scadenza: {Scadenza.ToString("dd MM yyyy")}, valore energetico: {ValoreEnergetico} Kcal";
+            return $"Nome: {Nome}, descrizione: {Descrizione}, prezzo: {Prezzo}€, reparto: {Reparto}, Data di scadenza: {Scadenza.ToString("dd MM yyyy")}, valore energetico: {ValoreEnergetico} Kcal";
         }
     }
 
@@ -259,21 +259,4 @@ namespace cassa
         }
     }
 
-    //internal class curapersona : prodotto
-    //{
-
-    //}
-    //internal class puliziacasa : prodotto
-    //{
-
-    //}
-    //internal class elettronica : prodotto
-    //{
-
-    //}
-    //internal class giocattoli : prodotto
-    //{
-
-    //}
-    //in
 }

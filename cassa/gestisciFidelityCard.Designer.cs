@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gestisciFidelityCard));
             listBox1 = new ListBox();
             panel1 = new Panel();
-            elimina = new Button();
             nuova = new Button();
+            elimina = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,16 +56,6 @@
             panel1.Size = new Size(180, 450);
             panel1.TabIndex = 3;
             // 
-            // elimina
-            // 
-            elimina.Location = new Point(15, 12);
-            elimina.Name = "elimina";
-            elimina.Size = new Size(153, 37);
-            elimina.TabIndex = 2;
-            elimina.Text = "elimina";
-            elimina.UseVisualStyleBackColor = true;
-            elimina.Click += elimina_click;
-            // 
             // nuova
             // 
             nuova.Location = new Point(15, 55);
@@ -75,6 +66,16 @@
             nuova.UseVisualStyleBackColor = true;
             nuova.Click += nuova_Click;
             // 
+            // elimina
+            // 
+            elimina.Location = new Point(15, 12);
+            elimina.Name = "elimina";
+            elimina.Size = new Size(153, 37);
+            elimina.TabIndex = 2;
+            elimina.Text = "elimina";
+            elimina.UseVisualStyleBackColor = true;
+            elimina.Click += elimina_click;
+            // 
             // gestisciFidelityCard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -82,6 +83,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(panel1);
             Controls.Add(listBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "gestisciFidelityCard";
             Text = "gestisci fidelity card";
             Load += MoficaProdotti_Load;

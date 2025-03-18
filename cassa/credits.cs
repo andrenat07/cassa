@@ -19,6 +19,7 @@ namespace cassa
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            //messaggio di saluto del direttore generale (:
             MessageBox.Show("CIAO \nsono Pietro il fondatore del PietroSpin™️");
         }
     }

@@ -20,11 +20,12 @@ namespace cassa
             InitializeComponent();
         }
 
+        //property per poi prendere il valore dello sconto 
         public int Numero { get => numero; set => numero = value; }
 
         public void button1_Click(object sender, EventArgs e)
         {
-
+            //quabndo si chiude restutuiamo ok e chiudiamo la form
             DialogResult = DialogResult.OK;
             this.Close();
         }

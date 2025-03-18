@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MoficaProdotti));
             listBox1 = new ListBox();
             panel1 = new Panel();
-            elimina = new Button();
             button1 = new Button();
+            elimina = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,16 +56,6 @@
             panel1.Size = new Size(180, 450);
             panel1.TabIndex = 3;
             // 
-            // elimina
-            // 
-            elimina.Location = new Point(15, 12);
-            elimina.Name = "elimina";
-            elimina.Size = new Size(153, 37);
-            elimina.TabIndex = 2;
-            elimina.Text = "elimina";
-            elimina.UseVisualStyleBackColor = true;
-            elimina.Click += elimina_click;
-            // 
             // button1
             // 
             button1.Location = new Point(15, 55);
@@ -75,6 +66,16 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // elimina
+            // 
+            elimina.Location = new Point(15, 12);
+            elimina.Name = "elimina";
+            elimina.Size = new Size(153, 37);
+            elimina.TabIndex = 2;
+            elimina.Text = "elimina";
+            elimina.UseVisualStyleBackColor = true;
+            elimina.Click += elimina_click;
+            // 
             // MoficaProdotti
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -82,6 +83,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(panel1);
             Controls.Add(listBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MoficaProdotti";
             Text = "MoficaProdotti";
             Load += MoficaProdotti_Load;

@@ -15,13 +15,14 @@ namespace cassa
         private Main prima;
         public Barcodesimulator(Main prima)
         {
+            //prendiamo il riferimento della form primaria
             InitializeComponent();
             this.prima = prima;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            //quando premiamo l'invia usiamo la funzione  scansione della form1 
             prima.scansione(textBox1.Text);
             textBox1.Text = "";
 
@@ -29,7 +30,8 @@ namespace cassa
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            //quando premiamo invio usiamo la funzione  scansione della form1 
+            if (e.KeyCode == Keys.Enter)//controlliamo se il tasto è invio
             {
                 prima.scansione(textBox1.Text);
                 textBox1.Text = "";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NuovaCard));
             label1 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
@@ -104,6 +105,7 @@
             Controls.Add(textBox1);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "NuovaCard";

@@ -91,14 +91,14 @@
             prodottiToolStripMenuItem.Name = "prodottiToolStripMenuItem";
             prodottiToolStripMenuItem.Size = new Size(199, 22);
             prodottiToolStripMenuItem.Text = "prodotti";
-            prodottiToolStripMenuItem.Click += prodottiToolStripMenuItem_Click;
+            prodottiToolStripMenuItem.Click += apriGestioneProdotti;
             // 
             // fidelityCardToolStripMenuItem
             // 
             fidelityCardToolStripMenuItem.Name = "fidelityCardToolStripMenuItem";
             fidelityCardToolStripMenuItem.Size = new Size(199, 22);
             fidelityCardToolStripMenuItem.Text = "fidelity card";
-            fidelityCardToolStripMenuItem.Click += fidelityCardToolStripMenuItem_Click;
+            fidelityCardToolStripMenuItem.Click += apriGestioneFidelityCard;
             // 
             // stampaScontrinoToolStripMenuItem
             // 
@@ -110,21 +110,22 @@
             // modalitàProfToolStripMenuItem
             // 
             modalitàProfToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { barcodeFakeToolStripMenuItem, disattivaStampaMenu });
+            modalitàProfToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
             modalitàProfToolStripMenuItem.Name = "modalitàProfToolStripMenuItem";
-            modalitàProfToolStripMenuItem.Size = new Size(91, 20);
-            modalitàProfToolStripMenuItem.Text = "modalità prof";
+            modalitàProfToolStripMenuItem.Size = new Size(78, 20);
+            modalitàProfToolStripMenuItem.Text = "similazione";
             // 
             // barcodeFakeToolStripMenuItem
             // 
             barcodeFakeToolStripMenuItem.Name = "barcodeFakeToolStripMenuItem";
-            barcodeFakeToolStripMenuItem.Size = new Size(160, 22);
-            barcodeFakeToolStripMenuItem.Text = "fake barcode";
+            barcodeFakeToolStripMenuItem.Size = new Size(180, 22);
+            barcodeFakeToolStripMenuItem.Text = "simulatore barcode";
             barcodeFakeToolStripMenuItem.Click += apriBarcodeSimulator;
             // 
             // disattivaStampaMenu
             // 
             disattivaStampaMenu.Name = "disattivaStampaMenu";
-            disattivaStampaMenu.Size = new Size(160, 22);
+            disattivaStampaMenu.Size = new Size(180, 22);
             disattivaStampaMenu.Text = "disattiva stampa";
             disattivaStampaMenu.Click += disattivaStampa;
             // 
@@ -166,7 +167,7 @@
             pulsanteFidelityCard.TabStop = false;
             pulsanteFidelityCard.Text = "fidelity card";
             pulsanteFidelityCard.UseVisualStyleBackColor = true;
-            pulsanteFidelityCard.Click += pulsanteFidelityCard_Click;
+            pulsanteFidelityCard.Click += scansioneFidelityCard;
             // 
             // pulsanteSconto
             // 

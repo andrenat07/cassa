@@ -21,6 +21,7 @@ namespace cassa
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //mostriamo il dialogo di scelta del font
             sceltaFont.Font = Main.FontStampa;
             if (sceltaFont.ShowDialog() == DialogResult.OK)
                 Main.FontStampa = sceltaFont.Font;
@@ -31,6 +32,7 @@ namespace cassa
         private void button2_Click(object sender, EventArgs e)
         {
             Process.Start("control", "printers");
+            //aprimo le impostazioni delle stampanti
         }
 
         private void ImpostazioniStampa_Resize(object sender, EventArgs e)

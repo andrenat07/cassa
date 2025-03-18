@@ -13,23 +13,30 @@ namespace cassa
         {
             InitializeComponent();
         }
-
+        //valore che indica se stiamo scansionando un carta o un prodotto
         private bool scansioneCard = false;
+
+        //oggetto dello scanner
         private UsbBarcodeScanner scanner = new UsbBarcodeScanner();
 
+        //font della stampa (pls non cambiarlo (ne serve 1 monospazziato))
         private static System.Drawing.Font fontStampa = new System.Drawing.Font("Courier New", 10);
 
         private int counter = 0; //conta quanti prodostti sono stati inseriti nel carrello
-        private bool? clienteMaggiorenne;
+        private bool? clienteMaggiorenne; //salva se il cliente è maggiornenne
 
+        //liste dei prodotti della spesa
         private List<Prodotto> prodotti = new List<Prodotto>();
-        private List<PulsanteProdotto> pulsantiCarrello = new List<PulsanteProdotto>();
         private List<Prodotto> carrello = new List<Prodotto>();
+        //è semplicemente una classe che eredita Button e ci aggiunge un intero (l'inidice del prodotto all'interno del pulsante)
+        private List<PulsanteProdotto> pulsantiCarrello = new List<PulsanteProdotto>();
 
+        //lista di tutte la carte
         private List<FidelityCard> carte = new List<FidelityCard>();
-
+        //salva il nome del cliente quando viene usata la fidelity card
         private string currentFidelityCard = "";
 
+        //variabili per il prezzo
         private int iva = 5;
         private int sconto = 0;
         private double prezzo = 0;
@@ -37,16 +44,17 @@ namespace cassa
         private double prezzoScontato = 0;
 
 
-
+        //property per alcuni attributi
         public static System.Drawing.Font FontStampa { get => fontStampa; set => fontStampa = value; }
         internal List<Prodotto> Prodotti { get => prodotti; set => prodotti = value; }
         internal List<FidelityCard> Carte { get => carte; set => carte = value; }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
+        {            
             scanner.BarcodeScanned += BarcodeScansionato; //aggiungo l'evento di scansione
             scanner.Start(); //fa iniziare la scansione dei codici
 
+            //aggiungo dei prodotti alla lista dei prodotti
             Prodotti.Add(new FruttaVerdura("Mela", "Mela rossa biologica", 1.20, "56881", new DateOnly(2025, 4, 10), 52, "Italia", 0.2));
             Prodotti.Add(new FruttaVerdura("Carota", "Carota fresca", 0.80, "43958", new DateOnly(2025, 3, 25), 41, "Italia", 0.15));
             Prodotti.Add(new FruttaVerdura("Banana", "Banana matura", 1.10, "88827", new DateOnly(2025, 4, 5), 89, "Ecuador", 0.25));
@@ -87,7 +95,7 @@ namespace cassa
             Prodotti.Add(new Alcolico("Whisky", "Whisky scozzese invecchiato 12 anni", 45.00, "53199", 0.7, "Vetro", 40));
             Prodotti.Add(new Alcolico("Rum", "Rum caraibico ambrato", 30.00, "62363", 0.7, "Vetro", 37));
 
-
+            //aggiungo delle fidelity card alla lista delle carte
             Carte.Add(new FidelityCard("mario", "rossi", "29270", 10));
             Carte.Add(new FidelityCard("Andrea", "natali", "60806", 100));
             Carte.Add(new FidelityCard("lorenzo", "gherardi", "16819", 50));
@@ -95,34 +103,35 @@ namespace cassa
             Carte.Add(new FidelityCard("Pietro", "Manzoni", "74002", 200));
 
         }
-
+        //evento che si scatena quando il lettore usb legge un barcode
         private void BarcodeScansionato(object? sender, BarcodeScannedEventArgs e)
-        {
+        {            
             scansione(e.Barcode);
         }
 
+        //funzione per la scansione
         public void scansione(string CodiceScansionato)
         {
-            if (!scansioneCard)
-                for (int i = 0; i < Prodotti.Count; i++)
+            if (!scansioneCard)//controlla se bisogna scansionare un prodotto o una carta
+                for (int i = 0; i < Prodotti.Count; i++)//cicla tutti i prodotti
                 {
-                    if (Prodotti[i].Codice == CodiceScansionato)
+                    if (Prodotti[i].Codice == CodiceScansionato)//cerca quello con il codice corrispondente
                     {
-                        if (Prodotti[i].GetType() == typeof(Alcolico))
+                        if (Prodotti[i].GetType() == typeof(Alcolico)) //se il prodotto è un alcolico
                         {
-                            if (clienteMaggiorenne == null)
+                            if (clienteMaggiorenne == null)//se il cliente non è stato ancora identificato
                             {
-                                MessageBox.Show("coso per l'invio");
+                                MessageBox.Show("coso per l'invio");//il lettore usb quando legge schiaccia invio quindi non si vedrebbe il messaggio successivo
                                 if (MessageBox.Show("il cliente è maggiorenne?", "prodotto alcolico", MessageBoxButtons.YesNo) == DialogResult.No)
                                 {
-                                    clienteMaggiorenne = false;
-                                    break;
+                                    clienteMaggiorenne = false;//salviamo che il cliente è minorenne 
+                                    break;//blocchaimo il ciclo quindi il prodotto no viene aggiunto
                                 }
                                 else
                                     clienteMaggiorenne = true;
                             }
 
-                            else if ((bool)!clienteMaggiorenne)
+                            else if ((bool)!clienteMaggiorenne) //se il cliente è minorenne
                             {
                                 MessageBox.Show("coso per l'invio");
                                 if (MessageBox.Show("il cliente è minorenne!!!\nperciò non può comprare una alcolico\nse hai sbagliato clicca annulla", "prodotto alcolico", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
@@ -131,10 +140,10 @@ namespace cassa
                                     break;
 
                             }
-
+                            //nel caso sia maggiorenne aggiunge senza problemi
                         }
 
-                        //PulsanteProdotto è un una clsse che eredita pulsante che in più contiene un oggetto prodotto
+                        //PulsanteProdotto è un una clsse che eredita pulsante che in più contiene l'idice nella lista del prodotto
                         PulsanteProdotto pulsanteProdotto = new PulsanteProdotto();
                         pulsanteProdotto.Indice = counter;
 
@@ -159,26 +168,28 @@ namespace cassa
                         //aggiorniamo il prezzo
                         aggiornaPrezzo(Prodotti[i].Prezzo);
                         counter++;
-                        break;
+                        break; //chiude il ciclo (sia per risparmiare che per non far scatenare l'errore)
                     }
                     if (i == Prodotti.Count - 1)
+                        //siamo arrivati alla fine del ciclo ma non è stato trovato nulla 
                         MessageBox.Show("il prodotto non fa parte del nostro negozio");
                 }
-            else
-                for (int i = 0; i < Carte.Count; i++)
+            else //stiamo scansionando una carta
+                for (int i = 0; i < Carte.Count; i++) //cicliamo tra tutte le carte
                 {
-                    if (Carte[i].Codice == CodiceScansionato)
+                    if (Carte[i].Codice == CodiceScansionato) //cerca quella con il codice corrispondente
                     {
-                        sconto = Carte[i].Sconto;
-                        pulsanteFidelityCard.Enabled = true;
-                        scansioneCard = false;
-                        currentFidelityCard = $"{Carte[i].Cognome} {Carte[i].Nome}";
-                        aggiornaPrezzo(0);
-                        break;
+                        sconto = Carte[i].Sconto;//applichiamo lo sconto sulla carta
+                        pulsanteFidelityCard.Enabled = true;//riattiviamo il pulsante
+                        scansioneCard = false;//disattiviamo che stiamo scansionando una carta
+                        currentFidelityCard = $"{Carte[i].Cognome} {Carte[i].Nome}";//salviamo l'untente
+                        aggiornaPrezzo(0);//riaggiorniamo il prezzo con lo sconto
+                        break;//chiude il ciclo (sia per risparmiare che per non far scatenare l'errore)
                     }
 
                     if (i == Carte.Count - 1)
                     {
+                        //siamo arrivati alla fine del ciclo ma non è stato trovato nulla 
                         MessageBox.Show("questa fidelity card non esiste");
                         pulsanteFidelityCard.Enabled = true;
                         scansioneCard = false;
@@ -187,30 +198,36 @@ namespace cassa
                 }
         }
 
+        //funzione per aggiornare il prezzo
         private void aggiornaPrezzo(double spesa)
         {
 
-            prezzo += spesa;
-            prezzoScontato = prezzo * sconto / 100;
-            prezzoIva = (prezzo - prezzoScontato) * iva / 100;
+            prezzo += spesa; //aggiungiamo la spesa
+            prezzoScontato = prezzo * sconto / 100; //calcoliamo lo sconto
+            prezzoIva = (prezzo - prezzoScontato) * iva / 100; //calcoliamo l'iva
 
+            //modifichaimo il prezzo e arrotondiamo le cifre a 2 deciamali
             totale.Text = $"totale: {Math.Round(prezzo - prezzoScontato + prezzoIva, 2)}€ \ndi cui IVA: {Math.Round(prezzoIva, 2)}€ \nsconto: {sconto}%";
         }
 
+        //per visualizare le impormazioni di un prodotto
         private void infoProdotto(object sender, EventArgs e)
         {
+            //mostriamo le informazioni del prodotto quando si clicca con il sinitro sul carello
             PulsanteProdotto pulsante = (PulsanteProdotto)sender;
             MessageBox.Show(carrello[pulsante.Indice].ToString(), "informazioni");
+            this.ActiveControl = null;
 
         }
 
+        //per aliminare un prodotto dalla spesa
         private void eliminaProdotto(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)//se viene premuto con il desctro
             {
                 PulsanteProdotto pulsante = (PulsanteProdotto)sender;
-                aggiornaPrezzo(-carrello[pulsante.Indice].Prezzo);
-                carrello.RemoveAt(pulsante.Indice);
+                aggiornaPrezzo(-carrello[pulsante.Indice].Prezzo);//aggiorniamo il prezzo togliendo il prodotto 
+                carrello.RemoveAt(pulsante.Indice);//rimuoviamo il prodotto dal carello
 
                 //cancelliamo tutti i pulsanti
                 for (int i = 0; i < pulsantiCarrello.Count; i++)
@@ -241,30 +258,93 @@ namespace cassa
             }
         }
 
-        private void disattivaStampa(object sender, EventArgs e)
+        //quando si finisce lo scontrino
+        private void FineScontrino(object sender, EventArgs e)
         {
-            disattivaStampaMenu.Checked = !disattivaStampaMenu.Checked;
+            if (carrello.Count != 0) //controlla se il carrello non è vuoto
+            {
+                //componiamo il testo dello scontrino
+                string testoScontrino = $"PietroSpin - la spesa rocciosa\n{DateTime.Now.ToString("f")}\n";
+                //se c'è una carta salutiamo l'acquirente
+                if (currentFidelityCard != "")
+                    testoScontrino += $"ciao {currentFidelityCard}\n\n";
+                //senò lasciamo lo spazio
+                else
+                    testoScontrino += "\n";
+                //aggiungiamo tutti i prodotti e posizioniamo i nomi a sinistra e i prezzi a destra 
+                for (int i = 0; i < carrello.Count; i++)
+                    testoScontrino += carrello[i].Nome.PadRight(30) + $"{carrello[i].Prezzo:F2}€".PadLeft(10) + "\n";
+                //aggiungiamo il prezzo
+                testoScontrino += $"\ntotale: {Math.Round(prezzo - prezzoScontato + prezzoIva, 2)}€ \ndi cui IVA: {Math.Round(prezzoIva, 2)}€ \nsconto: {sconto}%";
+
+
+                //salviamo in un file di testo lo scontrino
+                string file = "scontrini/" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".txt";
+                if (!System.IO.Directory.Exists("scontrini"))//se non esiste la cartella scontrini la crea
+                    System.IO.Directory.CreateDirectory("scontrini");
+                System.IO.File.WriteAllText(file, testoScontrino);//salva nel file txt lo scontrino
+
+                if (disattivaStampaMenu.Checked) //se è distattivata la stampa
+                    MessageBox.Show(testoScontrino); //stampiamo con messagebox
+                else
+                {
+                    //avviamo la stampa su stampante
+                    stampa.DocumentName = file;
+                    stampa.Print();
+                }
+
+
+                //cancelliamo tutti i pulsanti
+                for (int i = 0; i < pulsantiCarrello.Count; i++)
+                    pulsantiCarrello[i].Dispose();
+
+                //ripristiniamo le variabili
+                counter = 0;
+                prezzo = 0;
+                sconto = 0;
+                clienteMaggiorenne = null;
+                currentFidelityCard = "";
+                totale.Text = "totale: 0€\r\ndi cui IVA: 0€\r\nsconto: 0%";
+                this.ActiveControl = null;
+                carrello.Clear();
+                pulsantiCarrello.Clear();
+
+            }
+            else //viene notificato che il carello è vuoto
+                MessageBox.Show("il carrello è vuoto");
         }
 
+        //fa partire la scansione delle fidelity card
+        private void scansioneFidelityCard(object sender, EventArgs e)
+        {
+            scansioneCard = true;
+            pulsanteFidelityCard.Enabled = false;
+            this.ActiveControl = null;
+        }
+
+        //per aprire il simulatore di barcode
         private void apriBarcodeSimulator(object sender, EventArgs e)
         {
+            //costruiamo l'oggetto della form del barcode e gli passiamo il riferimento a questa form
             Barcodesimulator barcodesimulator = new Barcodesimulator(this);
             barcodesimulator.Show();
         }
 
-        private void apriCrediti(object sender, EventArgs e)
+        //per aprire la form dello sconto
+        private void pulsanteSconto_Click(object sender, EventArgs e)
         {
-            //apre la pagina dei crediti
-            Credits credits = new Credits();
-            credits.ShowDialog();
+            //costruiamo l'oggetto della form dello sconto
+            Sconto scontoForm = new Sconto();
+            if (scontoForm.ShowDialog() == DialogResult.OK)
+            {
+                sconto = scontoForm.Numero;
+            }
+            this.ActiveControl = null;
+            aggiornaPrezzo(0);
+
         }
 
-        private void apriImpostazioniScontrino(object sender, EventArgs e)
-        {
-            ImpostazioniStampa impostazioniStampa = new ImpostazioniStampa();
-            impostazioniStampa.ShowDialog();
-        }
-
+        //evento di quando si muove la form e fa mantentere la dimenzione agli elementi
         private void Main_Resize(object sender, EventArgs e)
         {
             //formattazione scontrino
@@ -298,60 +378,74 @@ namespace cassa
                     pulsantiCarrello[i].Size = new Size(scorrimento.Width - 20, 50);
         }
 
-        private void FineScontrino(object sender, EventArgs e)
+        //creiamo delle shortcut rapide
+        private void shortCut(object sender, KeyEventArgs e)
         {
-            if (carrello.Count != 0)
+            if (e.KeyCode == Keys.F3) //aggiunge prodotti random nel codice
             {
-                //componiamo il testo dello scontrino
-                string testoScontrino = $"PietroSpin - la spesa rocciosa\n{DateTime.Now.ToString("f")}\n";
-                if (currentFidelityCard != "")
-                    testoScontrino += $"ciao {currentFidelityCard}\n\n";
-                else
-                    testoScontrino += "\n";
-                for (int i = 0; i < carrello.Count; i++)
-                    testoScontrino += carrello[i].Nome.PadRight(30) + $"{carrello[i].Prezzo:F2}€".PadLeft(10) + "\n";
-                testoScontrino += $"\ntotale: {Math.Round(prezzo - prezzoScontato + prezzoIva, 2)}€ \ndi cui IVA: {Math.Round(prezzoIva, 2)}€ \nsconto: {sconto}%";
-
-
-                //salviamo in un file di testo lo scontrino
-                string file = "scontrini/" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".txt";
-                if (!System.IO.Directory.Exists("scontrini"))
-                    System.IO.Directory.CreateDirectory("scontrini");
-                System.IO.File.WriteAllText(file, testoScontrino);
-
-                if (disattivaStampaMenu.Checked)
-                    MessageBox.Show(testoScontrino);
+                Random random = new Random();
+                int numero;
+                if (scansioneCard)
+                {
+                    numero = random.Next(carte.Count);
+                    scansione(carte[numero].Codice);
+                }                    
                 else
                 {
-                    //avviamo la stampa
-                    stampa.DocumentName = file;
-                    stampa.Print();
-                }
-
-
-                //cancelliamo tutti i pulsanti
-                for (int i = 0; i < pulsantiCarrello.Count; i++)
-                    pulsantiCarrello[i].Dispose();
-
-                //ripristiniamo le variabili
-                counter = 0;
-                prezzo = 0;
-                sconto = 0;
-                clienteMaggiorenne = null;
-
-                currentFidelityCard = "";
-                totale.Text = "totale: 0€\r\ndi cui IVA: 0€\r\nsconto: 0%";
-                this.ActiveControl = null;
-                carrello.Clear();
-                pulsantiCarrello.Clear();
-
+                    numero = random.Next(Prodotti.Count);
+                    scansione(prodotti[numero].Codice);
+                }                
             }
-            else
-                MessageBox.Show("il carrello è vuoto");
+            else if (e.KeyCode == Keys.F4) //attiva la scansione della card
+            {
+                scansioneCard = true;
+                pulsanteFidelityCard.Enabled = false;
+                this.ActiveControl = null;
+            }
+            else if (e.KeyCode == Keys.F5) //stampa lo scontrino
+            {
+                FineScontrino(sender, e);
+            }
+
         }
 
+        //gestione dei prodotti
+        private void apriGestioneProdotti(object sender, EventArgs e)
+        {
+            //costruiamo l'oggetto della form della gestione prodotti e gli passiamo il riferimento a questa form
+            MoficaProdotti si = new MoficaProdotti(this);
+            si.ShowDialog();            
+        }
+
+        //gestione delle carte
+        private void apriGestioneFidelityCard(object sender, EventArgs e)
+        {
+            //costruiamo l'oggetto della form della gestione delle fidelity Card e gli passiamo il riferimento a questa form
+            gestisciFidelityCard si = new gestisciFidelityCard(this);
+            si.ShowDialog();
+        }
+        
+        //aprire impostazioni scontrino
+        private void apriImpostazioniScontrino(object sender, EventArgs e)
+        {
+            //apriamo le impostazioni dello scontrino
+            ImpostazioniStampa impostazioniStampa = new ImpostazioniStampa();
+            impostazioniStampa.ShowDialog();
+        }
+
+        //apre la form dei crediti
+        private void apriCrediti(object sender, EventArgs e)
+        {
+            //apre la pagina dei crediti
+            Credits credits = new Credits();
+            credits.ShowDialog();
+        }
+
+        //evento di quando si fa partire la stampa
         private void stampa_PrintPage(object sender, PrintPageEventArgs e)
         {
+            //prendo le distanze (codice da google)
+
             //prendiamo la stringa da file
             PrintDocument pietro = (PrintDocument)sender;
             string testoScontrino = File.ReadAllText(pietro.DocumentName);
@@ -378,79 +472,11 @@ namespace cassa
             e.HasMorePages = (testoScontrino.Length > 0);
         }
 
-        private void prodottiToolStripMenuItem_Click(object sender, EventArgs e)
+        //per disattivare la stampa
+        private void disattivaStampa(object sender, EventArgs e)
         {
-            MoficaProdotti si = new MoficaProdotti(this);
-            si.ShowDialog();
-
-            counter = 0;
-            for (int i = 0; i < carrello.Count; i++)
-            {
-                PulsanteProdotto pulsanteProdotto = new PulsanteProdotto();
-                pulsanteProdotto.Indice = i;
-
-                //personaliziamo il pulsante
-                pulsanteProdotto.Text = carrello[i].Nome;
-                pulsanteProdotto.Parent = scorrimento;
-                pulsanteProdotto.Size = new Size(scorrimento.Width - 20, 50);
-                pulsanteProdotto.TabStop = false;
-                pulsanteProdotto.Top = counter * 55 + 10;
-
-                //aggiungiamo gli eventi (tasto sx e dx)
-                pulsanteProdotto.Click += infoProdotto;
-                pulsanteProdotto.MouseDown += eliminaProdotto;
-
-                //aggiungiamo alla lista dei pulsanti questo pulsante
-                pulsantiCarrello.Add(pulsanteProdotto);
-                counter++;
-            }
-        }
-
-        private void pulsanteFidelityCard_Click(object sender, EventArgs e)
-        {
-            scansioneCard = true;
-            pulsanteFidelityCard.Enabled = false;
-            this.ActiveControl = null;
-        }
-
-        private void pulsanteSconto_Click(object sender, EventArgs e)
-        {
-            Sconto scontoForm = new Sconto();
-            if (scontoForm.ShowDialog() == DialogResult.OK)
-            {
-                sconto = scontoForm.Numero;
-            }
-            this.ActiveControl = null;
-            aggiornaPrezzo(0);
-
-        }
-
-        private void shortCut(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F3)
-            {
-                Random random = new Random();
-                int numero = random.Next(Prodotti.Count);
-
-                scansione(Prodotti[numero].Codice);
-            }
-            else if (e.KeyCode == Keys.F4)
-            {
-                scansioneCard = true;
-                pulsanteFidelityCard.Enabled = false;
-                this.ActiveControl = null;
-            }
-            else if (e.KeyCode == Keys.F5)
-            {
-                FineScontrino(sender, e);
-            }
-
-        }
-
-        private void fidelityCardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            gestisciFidelityCard si = new gestisciFidelityCard(this);
-            si.ShowDialog();
+            //invertiamo il segno della stampa
+            disattivaStampaMenu.Checked = !disattivaStampaMenu.Checked;
         }
     }
 

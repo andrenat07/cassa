@@ -15,12 +15,14 @@ namespace cassa
         List<FidelityCard> carte=new List<FidelityCard>();
         public NuovaCard(List<FidelityCard> carte)
         {
+            //prendiamo il riferimento della lista di carte
             InitializeComponent();
             this.carte = carte;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //quabndo si preme crea aggiungiamo alla lista la nuova carta
             carte.Add(new FidelityCard(textBox1.Text, textBox2.Text, numericUpDown2.Value.ToString() , (int)numericUpDown1.Value));
             Close();
         }

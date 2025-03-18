@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImpostazioniStampa));
             sceltaFont = new FontDialog();
             button1 = new Button();
             button2 = new Button();
@@ -64,6 +65,7 @@
             ClientSize = new Size(467, 282);
             Controls.Add(button2);
             Controls.Add(button1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ImpostazioniStampa";
             Text = "ImpostazioniStampa";
             Resize += ImpostazioniStampa_Resize;

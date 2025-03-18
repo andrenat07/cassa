@@ -15,6 +15,7 @@ namespace cassa
         private Main lista;
         public MoficaProdotti(Main lista)
         {
+            //prendiamo il rifermineto alla prima form
             InitializeComponent();
             this.lista = lista;
 
@@ -23,6 +24,7 @@ namespace cassa
 
         private void MoficaProdotti_Load(object sender, EventArgs e)
         {
+            //aggiungiamo tutti i prodotti nella tabella
             foreach (var item in lista.Prodotti)
                 listBox1.Items.Add(item);
 
@@ -30,6 +32,7 @@ namespace cassa
 
         private void elimina_click(object sender, EventArgs e)
         {
+            //eliminiamo il prodotto selezionato
             if(listBox1.SelectedItems!= null)
             {
                 lista.Prodotti.RemoveAt(listBox1.SelectedIndex);
@@ -40,6 +43,7 @@ namespace cassa
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //costruiamo l'oggetto della form NuovoProdotto gli passiamo il riferimento alla lista di prodotti
             NuovoProdotto si = new NuovoProdotto(lista.Prodotti);
             si.ShowDialog();
             listBox1.Items.Clear();

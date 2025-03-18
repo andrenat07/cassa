@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sconto));
             numericUpDown1 = new NumericUpDown();
             button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
@@ -36,6 +37,7 @@
             // numericUpDown1
             // 
             numericUpDown1.Location = new Point(12, 12);
+            numericUpDown1.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(151, 23);
             numericUpDown1.TabIndex = 0;
@@ -63,6 +65,7 @@
             Controls.Add(button1);
             Controls.Add(numericUpDown1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Sconto";
             Text = "Sconto";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
