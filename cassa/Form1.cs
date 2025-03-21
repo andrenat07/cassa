@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.IO.Ports;
 
 namespace cassa
 {
@@ -21,8 +22,10 @@ namespace cassa
 
         //font della stampa (pls non cambiarlo (ne serve 1 monospazziato))
         private static System.Drawing.Font fontStampa = new System.Drawing.Font("Courier New", 10);
+        private string testoScontrinoRimanente;
+        private bool primaPagina = true;
 
-        private int counter = 0; //conta quanti prodostti sono stati inseriti nel carrello
+        private int counter = 0; //conta quanti prodotti sono stati inseriti nel carrello
         private bool? clienteMaggiorenne; //salva se il cliente è maggiornenne
 
         //liste dei prodotti della spesa
@@ -30,7 +33,6 @@ namespace cassa
         private List<Prodotto> carrello = new List<Prodotto>();
         //è semplicemente una classe che eredita Button e ci aggiunge un intero (l'inidice del prodotto all'interno del pulsante)
         private List<PulsanteProdotto> pulsantiCarrello = new List<PulsanteProdotto>();
-
         //lista di tutte la carte
         private List<FidelityCard> carte = new List<FidelityCard>();
         //salva il nome del cliente quando viene usata la fidelity card
@@ -56,51 +58,56 @@ namespace cassa
 
             //aggiungo dei prodotti alla lista dei prodotti
             Prodotti.Add(new FruttaVerdura("Mela", "Mela rossa biologica", 1.20, "56881", new DateOnly(2025, 4, 10), 52, "Italia", 0.2));
-            Prodotti.Add(new FruttaVerdura("Carota", "Carota fresca", 0.80, "43958", new DateOnly(2025, 3, 25), 41, "Italia", 0.15));
-            Prodotti.Add(new FruttaVerdura("Banana", "Banana matura", 1.10, "88827", new DateOnly(2025, 4, 5), 89, "Ecuador", 0.25));
-            Prodotti.Add(new FruttaVerdura("Patata", "Patata novella", 0.60, "31960", new DateOnly(2025, 3, 28), 77, "Francia", 0.3));
+            Prodotti.Add(new FruttaVerdura("Carota", "Carota fresca", 0.80, "38934", new DateOnly(2025, 3, 25), 41, "Italia", 0.15));
+            Prodotti.Add(new FruttaVerdura("Banana", "Banana matura", 1.10, "43958", new DateOnly(2025, 4, 5), 89, "Ecuador", 0.25));
+            Prodotti.Add(new FruttaVerdura("Patata", "Patata novella", 0.60, "88827", new DateOnly(2025, 3, 28), 77, "Francia", 0.3));
 
-            Prodotti.Add(new Carne("Bistecca", "Bistecca di manzo", 15.50, "60226", new DateOnly(2025, 3, 18), 250, "Manzo", 0.5));
-            Prodotti.Add(new Carne("Coscia di pollo", "Pollo allevato a terra", 7.99, "63348", new DateOnly(2025, 3, 22), 165, "Pollo", 0.7));
-            Prodotti.Add(new Carne("Salsiccia", "Salsiccia di suino", 9.99, "22352", new DateOnly(2025, 3, 25), 300, "Suino", 0.6));
-            Prodotti.Add(new Carne("Agnello", "Costolette di agnello", 18.75, "24558", new DateOnly(2025, 3, 27), 270, "Agnello", 0.8));
+            Prodotti.Add(new Carne("Bistecca", "Bistecca di manzo", 15.50, "31960", new DateOnly(2025, 3, 18), 250, "Manzo", 0.5));
+            Prodotti.Add(new Carne("Coscia di pollo", "Pollo allevato a terra", 7.99, "60226", new DateOnly(2025, 3, 22), 165, "Pollo", 0.7));
+            Prodotti.Add(new Carne("Salsiccia", "Salsiccia di suino", 9.99, "63348", new DateOnly(2025, 3, 25), 300, "Suino", 0.6));
+            Prodotti.Add(new Carne("Agnello", "Costolette di agnello", 18.75, "22352", new DateOnly(2025, 3, 27), 270, "Agnello", 0.8));
 
-            Prodotti.Add(new Pane("Baguette", "Pane francese croccante", 1.50, "87898", new DateOnly(2025, 3, 15), 280, new DateOnly(2025, 3, 14), "Grano"));
-            Prodotti.Add(new Pane("Ciabatta", "Pane italiano morbido", 1.80, "17678", new DateOnly(2025, 3, 16), 270, new DateOnly(2025, 3, 15), "Grano"));
-            Prodotti.Add(new Pane("Pane integrale", "Pane con farina integrale", 2.00, "64328", new DateOnly(2025, 3, 17), 250, new DateOnly(2025, 3, 16), "Integrale"));
-            Prodotti.Add(new Pane("Focaccia", "Focaccia genovese", 2.50, "58181", new DateOnly(2025, 3, 18), 300, new DateOnly(2025, 3, 17), "Grano"));
+            Prodotti.Add(new Pane("Baguette", "Pane francese croccante", 1.50, "24558", new DateOnly(2025, 3, 15), 280, new DateOnly(2025, 3, 14), "Grano"));
+            Prodotti.Add(new Pane("Ciabatta", "Pane italiano morbido", 1.80, "87898", new DateOnly(2025, 3, 16), 270, new DateOnly(2025, 3, 15), "Grano"));
+            Prodotti.Add(new Pane("Pane integrale", "Pane con farina integrale", 2.00, "17678", new DateOnly(2025, 3, 17), 250, new DateOnly(2025, 3, 16), "Integrale"));
+            Prodotti.Add(new Pane("Focaccia", "Focaccia genovese", 2.50, "64328", new DateOnly(2025, 3, 18), 300, new DateOnly(2025, 3, 17), "Grano"));
 
-            Prodotti.Add(new Pesce("Salmone", "Salmone norvegese fresco", 22.99, "98571", new DateOnly(2025, 3, 20), 208, "Norvegia", 1.2));
-            Prodotti.Add(new Pesce("Orata", "Orata pescata nel Mediterraneo", 18.50, "54246", new DateOnly(2025, 3, 18), 150, "Italia", 0.9));
-            Prodotti.Add(new Pesce("Tonno", "Tonno pinna gialla", 25.99, "47738", new DateOnly(2025, 3, 22), 200, "Spagna", 1.1));
-            Prodotti.Add(new Pesce("Gamberi", "Gamberi freschi", 29.50, "95220", new DateOnly(2025, 3, 21), 105, "Argentina", 0.8));
+            Prodotti.Add(new Pesce("Salmone", "Salmone norvegese fresco", 22.99, "58181", new DateOnly(2025, 3, 20), 208, "Norvegia", 1.2));
+            Prodotti.Add(new Pesce("Orata", "Orata pescata nel Mediterraneo", 18.50, "98571", new DateOnly(2025, 3, 18), 150, "Italia", 0.9));
+            Prodotti.Add(new Pesce("Tonno", "Tonno pinna gialla", 25.99, "54246", new DateOnly(2025, 3, 22), 200, "Spagna", 1.1));
+            Prodotti.Add(new Pesce("Gamberi", "Gamberi freschi", 29.50, "47738", new DateOnly(2025, 3, 21), 105, "Argentina", 0.8));
 
-            Prodotti.Add(new Latticini("Latte intero", "Latte fresco intero 1L", 1.30, "46564", new DateOnly(2025, 3, 30), 60, 1));
-            Prodotti.Add(new Latticini("Formaggio Parmigiano", "Parmigiano Reggiano stagionato", 12.99, "53125", new DateOnly(2025, 8, 15), 402, 0.5));
-            Prodotti.Add(new Latticini("Mozzarella", "Mozzarella di bufala", 3.99, "89447", new DateOnly(2025, 4, 5), 280, 0.25));
-            Prodotti.Add(new Latticini("Yogurt", "Yogurt naturale senza zucchero", 0.99, "61041", new DateOnly(2025, 4, 10), 100, 0.15));
+            Prodotti.Add(new Latticini("Latte intero", "Latte fresco intero 1L", 1.30, "95220", new DateOnly(2025, 3, 30), 60, 1));
+            Prodotti.Add(new Latticini("Formaggio Parmigiano", "Parmigiano Reggiano stagionato", 12.99, "46564", new DateOnly(2025, 8, 15), 402, 0.5));
+            Prodotti.Add(new Latticini("Mozzarella", "Mozzarella di bufala", 3.99, "97536", new DateOnly(2025, 4, 5), 280, 0.25));
+            Prodotti.Add(new Latticini("Yogurt", "Yogurt naturale senza zucchero", 0.99, "53125", new DateOnly(2025, 4, 10), 100, 0.15));
 
-            Prodotti.Add(new Acqua("Acqua Naturale", "Acqua minerale naturale", 0.50, "84340", 1.5, "Plastica", "Monte Bianco"));
-            Prodotti.Add(new Acqua("Acqua Frizzante", "Acqua minerale frizzante", 0.60, "16294", 1.5, "Vetro", "Fonte Alpina"));
-            Prodotti.Add(new Acqua("Acqua Tonica", "Bevanda frizzante con chinino", 1.20, "25843", 1.0, "Vetro", "Fonte Rossa"));
-            Prodotti.Add(new Acqua("Acqua di cocco", "Acqua di cocco naturale", 2.50, "43395", 0.5, "Tetra Pak", "Filippine"));
+            Prodotti.Add(new Acqua("Acqua Naturale", "Acqua minerale naturale", 0.50, "89447", 1.5, "Plastica", "Monte Bianco"));
+            Prodotti.Add(new Acqua("Acqua Frizzante", "Acqua minerale frizzante", 0.60, "61041", 1.5, "Vetro", "Fonte Alpina"));
+            Prodotti.Add(new Acqua("Acqua Tonica", "Bevanda frizzante con chinino", 1.20, "84340", 1.0, "Vetro", "Fonte Rossa"));
+            Prodotti.Add(new Acqua("Acqua di cocco", "Acqua di cocco naturale", 2.50, "16294", 0.5, "Tetra Pak", "Filippine"));
 
-            Prodotti.Add(new Analcolico("Cola", "Bevanda gassata cola", 1.20, "41429", 1.5, "Plastica", 10));
-            Prodotti.Add(new Analcolico("Succo d'arancia", "Succo 100% arancia", 2.00, "17075", 1.0, "Tetra Pak", 8));
-            Prodotti.Add(new Analcolico("Limonata", "Bevanda gassata al limone", 1.50, "44223", 1.5, "Plastica", 9));
-            Prodotti.Add(new Analcolico("Tè freddo", "Tè freddo al limone", 1.80, "38915", 1.5, "Plastica", 7));
+            Prodotti.Add(new Analcolico("Cola", "Bevanda gassata cola", 1.20, "25843", 1.5, "Plastica", 10));
+            Prodotti.Add(new Analcolico("Succo d'arancia", "Succo 100% arancia", 2.00, "43395", 1.0, "Tetra Pak", 8));
+            Prodotti.Add(new Analcolico("Limonata", "Bevanda gassata al limone", 1.50, "41429", 1.5, "Plastica", 9));
+            Prodotti.Add(new Analcolico("Tè freddo", "Tè freddo al limone", 1.80, "17075", 1.5, "Plastica", 7));
 
-            Prodotti.Add(new Alcolico("Birra Lager", "Birra chiara leggera", 2.50, "79029", 0.5, "Vetro", 5));
-            Prodotti.Add(new Alcolico("Vino Rosso", "Vino rosso toscano", 15.00, "94903", 0.75, "Vetro", 13));
-            Prodotti.Add(new Alcolico("Whisky", "Whisky scozzese invecchiato 12 anni", 45.00, "53199", 0.7, "Vetro", 40));
-            Prodotti.Add(new Alcolico("Rum", "Rum caraibico ambrato", 30.00, "62363", 0.7, "Vetro", 37));
+            Prodotti.Add(new Alcolico("Birra Lager", "Birra chiara leggera", 2.50, "44223", 0.5, "Vetro", 5));
+            Prodotti.Add(new Alcolico("Vino Rosso", "Vino rosso toscano", 15.00, "38915", 0.75, "Vetro", 13));
+            Prodotti.Add(new Alcolico("Whisky", "Whisky scozzese invecchiato 12 anni", 45.00, "79029", 0.7, "Vetro", 40));
+            Prodotti.Add(new Alcolico("Rum", "Rum caraibico ambrato", 30.00, "94903", 0.7, "Vetro", 37));
 
-            //aggiungo delle fidelity card alla lista delle carte
-            Carte.Add(new FidelityCard("mario", "rossi", "29270", 10));
-            Carte.Add(new FidelityCard("Andrea", "natali", "60806", 100));
-            Carte.Add(new FidelityCard("lorenzo", "gherardi", "16819", 50));
+            //aggiungo delle fidelity card alla lista delle carte            
+            Carte.Add(new FidelityCard("Andrea", "Natali", "60806", 100));
+            Carte.Add(new FidelityCard("Lorenzo", "Gherardi", "16819", 50));
             Carte.Add(new FidelityCard("Stefano", "Magni", "97407", -100));
             Carte.Add(new FidelityCard("Pietro", "Manzoni", "74002", 200));
+            Carte.Add(new FidelityCard("Giulia Maria", "Maiorana", "68435", 50));
+            Carte.Add(new FidelityCard("Mario", "Rossi", "29270", 10));
+            Carte.Add(new FidelityCard("Marco","Bianchi","78152",15));
+            Carte.Add(new FidelityCard("Elena", "Rossi", "49484",20)); 
+            Carte.Add(new FidelityCard("Luca", "Ferrari", "60640",10));
+            Carte.Add(new FidelityCard("Giulia" , "Conti" ,"59203", 25));
 
         }
         //evento che si scatena quando il lettore usb legge un barcode
@@ -147,6 +154,19 @@ namespace cassa
                         PulsanteProdotto pulsanteProdotto = new PulsanteProdotto();
                         pulsanteProdotto.Indice = counter;
 
+                        // proviamo a mandare un messaggio a tutte le porte seriali collegate al pc
+                        foreach (var porta in SerialPort.GetPortNames()) 
+                        {
+                            try
+                            {
+                                SerialPort miaporta = new SerialPort(porta, 9600);
+                                miaporta.Open();
+                                miaporta.Write($"{prodotti[i].Nome}!{Math.Round(prodotti[i].Prezzo, 2)}");
+                                miaporta.Close();
+                            }
+                            catch { }
+                        }
+                        
 
                         //personaliziamo il pulsante
                         pulsanteProdotto.Text = Prodotti[i].Nome;
@@ -264,7 +284,7 @@ namespace cassa
             if (carrello.Count != 0) //controlla se il carrello non è vuoto
             {
                 //componiamo il testo dello scontrino
-                string testoScontrino = $"PietroSpin - la spesa rocciosa\n{DateTime.Now.ToString("f")}\n";
+                string testoScontrino = $"PietroteTSpin - la spesa rocciosa\n{DateTime.Now.ToString("f")}\n";
                 //se c'è una carta salutiamo l'acquirente
                 if (currentFidelityCard != "")
                     testoScontrino += $"ciao {currentFidelityCard}\n\n";
@@ -277,6 +297,18 @@ namespace cassa
                 //aggiungiamo il prezzo
                 testoScontrino += $"\ntotale: {Math.Round(prezzo - prezzoScontato + prezzoIva, 2)}€ \ndi cui IVA: {Math.Round(prezzoIva, 2)}€ \nsconto: {sconto}%";
 
+                // proviamo a mandare un messaggio a tutte le porte collegate al pc
+                foreach (var porta in SerialPort.GetPortNames())
+                {
+                    try
+                    {
+                        SerialPort miaporta = new SerialPort(porta, 9600);
+                        miaporta.Open();
+                        miaporta.Write($"totale!{Math.Round(prezzo - prezzoScontato + prezzoIva, 2)}");
+                        miaporta.Close();
+                    }
+                    catch { }
+                }
 
                 //salviamo in un file di testo lo scontrino
                 string file = "scontrini/" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".txt";
@@ -331,7 +363,7 @@ namespace cassa
         }
 
         //per aprire la form dello sconto
-        private void pulsanteSconto_Click(object sender, EventArgs e)
+        private void apriSconto(object sender, EventArgs e)
         {
             //costruiamo l'oggetto della form dello sconto
             Sconto scontoForm = new Sconto();
@@ -339,6 +371,7 @@ namespace cassa
             {
                 sconto = scontoForm.Numero;
             }
+            currentFidelityCard = "";
             this.ActiveControl = null;
             aggiornaPrezzo(0);
 
@@ -389,12 +422,12 @@ namespace cassa
                 {
                     numero = random.Next(carte.Count);
                     scansione(carte[numero].Codice);
-                }                    
+                }
                 else
                 {
                     numero = random.Next(Prodotti.Count);
                     scansione(prodotti[numero].Codice);
-                }                
+                }
             }
             else if (e.KeyCode == Keys.F4) //attiva la scansione della card
             {
@@ -406,7 +439,13 @@ namespace cassa
             {
                 FineScontrino(sender, e);
             }
-
+            else if (e.KeyCode == Keys.F11)
+            {
+                if (WindowState == FormWindowState.Maximized)
+                    this.WindowState = FormWindowState.Normal;
+                else if (WindowState == FormWindowState.Normal)
+                    WindowState = FormWindowState.Maximized;
+            }
         }
 
         //gestione dei prodotti
@@ -441,35 +480,52 @@ namespace cassa
             credits.ShowDialog();
         }
 
-        //evento di quando si fa partire la stampa
+        //evento di quando si stampa una pagina
         private void stampa_PrintPage(object sender, PrintPageEventArgs e)
         {
-            //prendo le distanze (codice da google)
+            // Se è la prima pagina, carichiamo il testo dal file
+            if (testoScontrinoRimanente == null)
+            {
+                PrintDocument pietro = (PrintDocument)sender;
+                testoScontrinoRimanente = File.ReadAllText(pietro.DocumentName);
+            }
 
-            //prendiamo la stringa da file
-            PrintDocument pietro = (PrintDocument)sender;
-            string testoScontrino = File.ReadAllText(pietro.DocumentName);
+            int offsetY = e.MarginBounds.Top;
 
+            // Stampiamo l'immagine solo sulla prima pagina
+            if (primaPagina)
+            {
+                System.Drawing.Image immagine = System.Drawing.Image.FromFile("immagini/logo.png");
+                Rectangle rettangoloImmagine = new Rectangle(e.MarginBounds.Left, e.MarginBounds.Top, 100, 100);
+                e.Graphics.DrawImage(immagine, rettangoloImmagine);
+                offsetY += rettangoloImmagine.Height + 10; // Spostiamo il testo in basso dopo l'immagine
+            }
 
-            // aggiungiamo la immagine
-            System.Drawing.Image immagine = System.Drawing.Image.FromFile("immagini/logo.png");
-            Rectangle rettangoloImmagine = new Rectangle(e.MarginBounds.Left, e.MarginBounds.Top, 100, 100);
-            e.Graphics.DrawImage(immagine, rettangoloImmagine);
-
-            // Offset per il testo dopo l'immagine
-            int offsetY = rettangoloImmagine.Height + 10;
-
-            RectangleF areaTesto = new RectangleF(e.MarginBounds.Left, e.MarginBounds.Top + offsetY, e.MarginBounds.Width, e.MarginBounds.Height - offsetY);
+            RectangleF areaTesto = new RectangleF(e.MarginBounds.Left, offsetY, e.MarginBounds.Width, e.MarginBounds.Height - (offsetY - e.MarginBounds.Top));
 
             int caratteriPerPagina = 0;
             int lineePerPagina = 0;
-            e.Graphics.MeasureString(testoScontrino, FontStampa, areaTesto.Size, StringFormat.GenericTypographic, out caratteriPerPagina, out lineePerPagina);
+            e.Graphics.MeasureString(testoScontrinoRimanente, FontStampa, areaTesto.Size, StringFormat.GenericTypographic, out caratteriPerPagina, out lineePerPagina);
 
-            e.Graphics.DrawString(testoScontrino, FontStampa, Brushes.Black, areaTesto, StringFormat.GenericTypographic);
+            // Prendiamo solo la parte di testo che entra in questa pagina
+            string testoDaStampare = testoScontrinoRimanente.Substring(0, Math.Min(caratteriPerPagina, testoScontrinoRimanente.Length));
+            e.Graphics.DrawString(testoDaStampare, FontStampa, Brushes.Black, areaTesto, StringFormat.GenericTypographic);
 
-            testoScontrino = testoScontrino.Substring(caratteriPerPagina);
+            // Aggiorniamo il testo rimanente
+            testoScontrinoRimanente = testoScontrinoRimanente.Substring(testoDaStampare.Length);
 
-            e.HasMorePages = (testoScontrino.Length > 0);
+            // Controlliamo se ci sono altre pagine
+            e.HasMorePages = (testoScontrinoRimanente.Length > 0);
+
+            // Dopo la prima pagina, l'immagine non deve essere più stampata
+            primaPagina = false;
+
+            // Se è l'ultima pagina, resettiamo le variabili per la prossima stampa
+            if (!e.HasMorePages)
+            {
+                testoScontrinoRimanente = null;
+                primaPagina = true;
+            }
         }
 
         //per disattivare la stampa

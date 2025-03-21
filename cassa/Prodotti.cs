@@ -9,7 +9,6 @@ namespace cassa
 {
     enum Reparto
     {
-
         Alimentari,
         Ortofrutta,
         Macelleria,
@@ -108,7 +107,7 @@ namespace cassa
         }
     }
 
-    // Sottoclasse Macelleria 
+    // Sottoclasse carne 
     internal class Carne : Alimento
     {
         private string animale;
@@ -131,16 +130,16 @@ namespace cassa
     //// Sottoclasse Panetteria 
     internal class Pane : Alimento
     {
-        private DateOnly DataProduzione;
+        private DateOnly dataProduzione;
         private string farina;
-        public Pane(string nome, string descrizione, double prezzo, string codice, DateOnly scadenza, int valoreEnergetico, DateOnly dataProduzione, string farina) : base(nome, descrizione, prezzo,Reparto.Panetteria, codice, scadenza, valoreEnergetico)
+        public Pane(string nome, string descrizione, double prezzo, string codice, DateOnly scadenza, int valoreEnergetico, DateOnly dataProduzione, string farina) : base(nome, descrizione, prezzo,Reparto.Pescheria, codice, scadenza, valoreEnergetico)
         {
             DataProduzione = dataProduzione;
             Farina=farina;
             
         }
 
-        public DateOnly DataProduzione1 { get => DataProduzione; set => DataProduzione = value; }
+        public DateOnly DataProduzione { get => dataProduzione; set => dataProduzione = value; }
         public string Farina { get => farina; set => farina = value; }
 
         public override string ToString()

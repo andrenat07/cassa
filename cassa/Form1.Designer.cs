@@ -118,14 +118,14 @@
             // barcodeFakeToolStripMenuItem
             // 
             barcodeFakeToolStripMenuItem.Name = "barcodeFakeToolStripMenuItem";
-            barcodeFakeToolStripMenuItem.Size = new Size(180, 22);
+            barcodeFakeToolStripMenuItem.Size = new Size(176, 22);
             barcodeFakeToolStripMenuItem.Text = "simulatore barcode";
             barcodeFakeToolStripMenuItem.Click += apriBarcodeSimulator;
             // 
             // disattivaStampaMenu
             // 
             disattivaStampaMenu.Name = "disattivaStampaMenu";
-            disattivaStampaMenu.Size = new Size(180, 22);
+            disattivaStampaMenu.Size = new Size(176, 22);
             disattivaStampaMenu.Text = "disattiva stampa";
             disattivaStampaMenu.Click += disattivaStampa;
             // 
@@ -178,7 +178,7 @@
             pulsanteSconto.TabStop = false;
             pulsanteSconto.Text = "sconto";
             pulsanteSconto.UseVisualStyleBackColor = true;
-            pulsanteSconto.Click += pulsanteSconto_Click;
+            pulsanteSconto.Click += apriSconto;
             // 
             // totale
             // 
@@ -200,16 +200,16 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 441);
-            Controls.Add(totale);
             Controls.Add(pulsanteSconto);
             Controls.Add(pulsanteFidelityCard);
             Controls.Add(banner);
             Controls.Add(PulsanteScontrino);
             Controls.Add(menuStrip1);
             Controls.Add(scontrino);
+            Controls.Add(totale);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
-            MinimumSize = new Size(800, 400);
+            MinimumSize = new Size(800, 450);
             Name = "Main";
             Text = "Form1";
             Load += Form1_Load;
