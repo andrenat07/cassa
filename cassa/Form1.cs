@@ -1,6 +1,5 @@
 using BasselTech.UsbBarcodeScanner;
 using System.Drawing.Printing;
-using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -96,6 +95,7 @@ namespace cassa
             Prodotti.Add(new Alcolico("Vino Rosso", "Vino rosso toscano", 15.00, "38915", 0.75, "Vetro", 13));
             Prodotti.Add(new Alcolico("Whisky", "Whisky scozzese invecchiato 12 anni", 45.00, "79029", 0.7, "Vetro", 40));
             Prodotti.Add(new Alcolico("Rum", "Rum caraibico ambrato", 30.00, "94903", 0.7, "Vetro", 37));
+
 
             //aggiungo delle fidelity card alla lista delle carte            
             Carte.Add(new FidelityCard("Andrea", "Natali", "60806", 100));
@@ -284,7 +284,7 @@ namespace cassa
             if (carrello.Count != 0) //controlla se il carrello non è vuoto
             {
                 //componiamo il testo dello scontrino
-                string testoScontrino = $"PietroteTSpin - la spesa rocciosa\n{DateTime.Now.ToString("f")}\n";
+                string testoScontrino = $"PietroSpin - la spesa rocciosa\n{DateTime.Now.ToString("f")}\n";
                 //se c'è una carta salutiamo l'acquirente
                 if (currentFidelityCard != "")
                     testoScontrino += $"ciao {currentFidelityCard}\n\n";
