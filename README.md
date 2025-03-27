@@ -79,6 +79,7 @@ queste modifiche rigangono solo nella attuale sessione
 in questa schermata si vedono tutti prodotti presenti nel nostro negozio
 
 ![](immagini/gestioneProdotti.png) 
+
 si possono selezinare prodotti ed eliminarli
 
 si può creare un prodotto generico
@@ -89,9 +90,11 @@ si può creare un prodotto generico
 in questa schermata si vedono tutte le carte dei clienti
 
 ![](immagini/gesioneCarte.png)
+
 si possono selezionare ed eliminare
 
 si può creare una carta
+
 ![](immagini/nuovaCard.png)
 
 # Display Arduino
