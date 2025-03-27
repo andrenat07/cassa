@@ -8,6 +8,7 @@ abbiamo creato un gestionale di cassa in una windows Form  che funziona tramite 
 quando si scansiona un barcode viene aggiunto un elemento
 
 se non si dispone di un barcode usb si può utilizare il simulatore nella sezione simulazione
+
 ![](immagini/barcodeSimulator.png)
 
 ## Prodotti 
@@ -27,6 +28,7 @@ nello scontrino poi verra riportato il nome del cliente
 # carrello
 
 quando scansioni un barcode di un prodotto viene cercato tra tutti i prodotti in elenco e viene aggiunto nel menù laterale
+
 ![](immagini/carello.png)
 
 ## eliminazione di un prodotto
@@ -36,14 +38,17 @@ quando si preme con il tasto destro il prodotto viene eliminato dal carello.
 ## informazioni di un prodotto
 
 quando invece si preme con il tasto sinistro si vedono le informazioni del prodotto.
+
 ![](immagini/informazioniProdotto.png)
 
 ## prodotto alcolico
 
 quando si inserisce un prodotto alcolico il programma chiede al cassiere se il cliente è maggiorenne
+
 ![](immagini/identificazionecliente.png)
 
 se il cliente viene identificato come minorenne ogni volta viene fatto un controllo 
+
 ![](immagini/clienteminorenne.png)
 
 in caso contrario viene aggiuto il prodotto senza problemi
@@ -72,14 +77,17 @@ queste modifiche rigangono solo nella attuale sessione
 
 ## gestione prodotti
 in questa schermata si vedono tutti prodotti presenti nel nostro negozio
+
 ![](immagini/gestioneProdotti.png) 
 si possono selezinare prodotti ed eliminarli
 
 si può creare un prodotto generico
+
 ![](immagini\nuovoProdotto.png)
 
 ## gestione carte
 in questa schermata si vedono tutte le carte dei clienti
+
 ![](immagini/gesioneCarte.png)
 si possono selezionare ed eliminare
 
