@@ -85,6 +85,7 @@
             Controls.Add(listBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "gestisciFidelityCard";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "gestisci fidelity card";
             Load += MoficaProdotti_Load;
             panel1.ResumeLayout(false);

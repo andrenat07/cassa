@@ -109,6 +109,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "NuovaCard";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "NuovaCard";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();

@@ -67,6 +67,7 @@
             Controls.Add(button1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ImpostazioniStampa";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "ImpostazioniStampa";
             Resize += ImpostazioniStampa_Resize;
             ResumeLayout(false);

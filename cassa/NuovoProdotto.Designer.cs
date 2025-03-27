@@ -117,6 +117,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "NuovoProdotto";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Nuovo Prodotto";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();

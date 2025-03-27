@@ -85,6 +85,7 @@
             Controls.Add(listBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MoficaProdotti";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MoficaProdotti";
             Load += MoficaProdotti_Load;
             panel1.ResumeLayout(false);

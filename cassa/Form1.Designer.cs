@@ -90,14 +90,14 @@
             // 
             prodottiToolStripMenuItem.Name = "prodottiToolStripMenuItem";
             prodottiToolStripMenuItem.Size = new Size(199, 22);
-            prodottiToolStripMenuItem.Text = "prodotti";
+            prodottiToolStripMenuItem.Text = "gestione prodotti";
             prodottiToolStripMenuItem.Click += apriGestioneProdotti;
             // 
             // fidelityCardToolStripMenuItem
             // 
             fidelityCardToolStripMenuItem.Name = "fidelityCardToolStripMenuItem";
             fidelityCardToolStripMenuItem.Size = new Size(199, 22);
-            fidelityCardToolStripMenuItem.Text = "fidelity card";
+            fidelityCardToolStripMenuItem.Text = "gestione carte";
             fidelityCardToolStripMenuItem.Click += apriGestioneFidelityCard;
             // 
             // stampaScontrinoToolStripMenuItem
@@ -118,14 +118,14 @@
             // barcodeFakeToolStripMenuItem
             // 
             barcodeFakeToolStripMenuItem.Name = "barcodeFakeToolStripMenuItem";
-            barcodeFakeToolStripMenuItem.Size = new Size(176, 22);
+            barcodeFakeToolStripMenuItem.Size = new Size(180, 22);
             barcodeFakeToolStripMenuItem.Text = "simulatore barcode";
             barcodeFakeToolStripMenuItem.Click += apriBarcodeSimulator;
             // 
             // disattivaStampaMenu
             // 
             disattivaStampaMenu.Name = "disattivaStampaMenu";
-            disattivaStampaMenu.Size = new Size(176, 22);
+            disattivaStampaMenu.Size = new Size(180, 22);
             disattivaStampaMenu.Text = "disattiva stampa";
             disattivaStampaMenu.Click += disattivaStampa;
             // 
@@ -211,6 +211,7 @@
             MainMenuStrip = menuStrip1;
             MinimumSize = new Size(800, 450);
             Name = "Main";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             Load += Form1_Load;
             KeyDown += shortCut;

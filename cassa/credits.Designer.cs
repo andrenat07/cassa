@@ -68,6 +68,7 @@
             MinimizeBox = false;
             MinimumSize = new Size(771, 587);
             Name = "Credits";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "credits";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

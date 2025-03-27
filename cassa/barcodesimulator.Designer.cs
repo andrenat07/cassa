@@ -63,6 +63,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Barcodesimulator";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "barcode simulator";
             TopMost = true;
             Leave += Barcodesimulator_Leave;

@@ -67,6 +67,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Sconto";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Sconto";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ResumeLayout(false);
